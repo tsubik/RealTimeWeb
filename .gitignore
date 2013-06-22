@@ -1,0 +1,15 @@
+[Oo]bj/
+[Bb]in/
+*.user
+*.suo
+*.cache
+build/
+*.swp
+_ReSharper*
+App_Bundles/
+*.ncrunch*
+src/**/*.nuspec
+*.dotCover
+*.orig
+src/packages
+cassette-cache
