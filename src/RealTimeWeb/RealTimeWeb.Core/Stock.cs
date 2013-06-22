@@ -4,6 +4,10 @@ namespace Microsoft.AspNet.SignalR.StockTicker
 {
     public class Stock
     {
+		private static readonly Random _updateOrNotRandom = new Random();
+		// Stock can go up or down by a percentage of this factor on each change
+		private readonly double _rangePercent = 0.002;
+
         private decimal _price;
 
         public string Symbol { get; set; }
@@ -62,5 +66,25 @@ namespace Microsoft.AspNet.SignalR.StockTicker
                 }
             }
         }
+
+		public bool TryUpdatePrice()
+		{
+			// Randomly choose whether to udpate this stock or not
+			var r = _updateOrNotRandom.NextDouble();
+			if (r > 0.1)
+			{
+				return false;
+			}
+
+			// Update the stock price by a random factor of the range percent
+			var random = new Random((int)Math.Floor(Price));
+			var percentChange = random.NextDouble() * _rangePercent;
+			var pos = random.NextDouble() > 0.51;
+			var change = Math.Round(Price * (decimal)percentChange, 2);
+			change = pos ? change : -change;
+
+			Price += change;
+			return true;
+		}
     }
 }

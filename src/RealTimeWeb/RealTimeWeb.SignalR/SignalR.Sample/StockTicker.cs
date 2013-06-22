@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using Microsoft.AspNet.SignalR.Hubs;
+using RealTimeWeb.Core;
 
 namespace Microsoft.AspNet.SignalR.StockTicker
 {
@@ -16,13 +17,9 @@ namespace Microsoft.AspNet.SignalR.StockTicker
         private readonly object _updateStockPricesLock = new object();
 
         private readonly ConcurrentDictionary<string, Stock> _stocks = new ConcurrentDictionary<string, Stock>();
-
-        // Stock can go up or down by a percentage of this factor on each change
-        private readonly double _rangePercent = 0.002;
         
         private readonly TimeSpan _updateInterval = TimeSpan.FromMilliseconds(250);
-        private readonly Random _updateOrNotRandom = new Random();
-
+       
         private Timer _timer;
         private volatile bool _updatingStockPrices;
         private volatile MarketState _marketState;
@@ -108,14 +105,7 @@ namespace Microsoft.AspNet.SignalR.StockTicker
         private void LoadDefaultStocks()
         {
             _stocks.Clear();
-
-            var stocks = new List<Stock>
-            {
-                new Stock { Symbol = "MSFT", Price = 30.31m },
-                new Stock { Symbol = "APPL", Price = 578.18m },
-                new Stock { Symbol = "GOOG", Price = 570.30m }
-            };
-
+			var stocks = StockFixtures.GetDefaultStocks();
             stocks.ForEach(stock => _stocks.TryAdd(stock.Symbol, stock));
         }
 
@@ -130,35 +120,14 @@ namespace Microsoft.AspNet.SignalR.StockTicker
 
                     foreach (var stock in _stocks.Values)
                     {
-                        if (TryUpdateStockPrice(stock))
+                        if (stock.TryUpdatePrice())
                         {
                             BroadcastStockPrice(stock);
                         }
                     }
-
                     _updatingStockPrices = false;
                 }
             }
-        }
-
-        private bool TryUpdateStockPrice(Stock stock)
-        {
-            // Randomly choose whether to udpate this stock or not
-            var r = _updateOrNotRandom.NextDouble();
-            if (r > 0.1)
-            {
-                return false;
-            }
-
-            // Update the stock price by a random factor of the range percent
-            var random = new Random((int)Math.Floor(stock.Price));
-            var percentChange = random.NextDouble() * _rangePercent;
-            var pos = random.NextDouble() > 0.51;
-            var change = Math.Round(stock.Price * (decimal)percentChange, 2);
-            change = pos ? change : -change;
-
-            stock.Price += change;
-            return true;
         }
 
         private void BroadcastMarketStateChange(MarketState marketState)
