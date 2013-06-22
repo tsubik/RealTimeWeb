@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeWeb.SignalR", "RealTimeWeb.SignalR\RealTimeWeb.SignalR.csproj", "{54F37C35-CBB7-48A1-8FF1-D203CD043376}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeWeb.Core", "RealTimeWeb.Core\RealTimeWeb.Core.csproj", "{3303D559-8600-4994-AF6A-60ACAF97A28B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{54F37C35-CBB7-48A1-8FF1-D203CD043376}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54F37C35-CBB7-48A1-8FF1-D203CD043376}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54F37C35-CBB7-48A1-8FF1-D203CD043376}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3303D559-8600-4994-AF6A-60ACAF97A28B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3303D559-8600-4994-AF6A-60ACAF97A28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3303D559-8600-4994-AF6A-60ACAF97A28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3303D559-8600-4994-AF6A-60ACAF97A28B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
