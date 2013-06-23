@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR.Hubs;
+using RealTimeWeb.Core;
 
 namespace Microsoft.AspNet.SignalR.StockTicker
 {

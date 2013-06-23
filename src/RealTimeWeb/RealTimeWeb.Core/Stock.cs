@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Web.Script.Serialization;
 
-namespace Microsoft.AspNet.SignalR.StockTicker
+namespace RealTimeWeb.Core
 {
     public class Stock
     {
@@ -85,6 +86,11 @@ namespace Microsoft.AspNet.SignalR.StockTicker
 
 			Price += change;
 			return true;
+		}
+
+		public string ToJson()
+		{
+			return new JavaScriptSerializer().Serialize(this);
 		}
     }
 }
