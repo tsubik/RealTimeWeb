@@ -133,10 +133,9 @@ $(function () {
 				console.log('Connection was closed');
 			}
 		}, false);
-		source.addEventListener('marketOpened', ticker.marketClosed, false);
+		source.addEventListener('marketOpened', ticker.marketOpened, false);
 		source.addEventListener('marketClosed', ticker.marketClosed, false);
 		source.addEventListener('marketReset', ticker.marketReset, false);
-		source.addEventListener('marketState', ticker.init, false);
 		source.addEventListener('updateStockPrice', ticker.updateStockPrice, false);
 	}
 	else {
