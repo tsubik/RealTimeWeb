@@ -139,10 +139,10 @@ namespace RealTimeWeb.PureSSE.Code
             switch (marketState)
             {
                 case MarketState.Open:
-					Publish("marketOpened", "");
+					Publish("marketOpened", "fdsafdsafdsfdfds");
                     break;
                 case MarketState.Closed:
-					Publish("marketClosed", "");
+					Publish("marketClosed", "fdsafdsafdsafds");
                     break;
                 default:
                     break;
@@ -158,9 +158,9 @@ namespace RealTimeWeb.PureSSE.Code
 				{
 					subscriber.Flush();
 				}
-				catch
+				catch(Exception e)
 				{
-					//MvcApplication.Logger.Log(e.ToString(), "EXCEPTION");
+					MvcApplication.Logger.Log(e.ToString(), "EXCEPTION");
 				}
 			}
 		}
@@ -175,25 +175,6 @@ namespace RealTimeWeb.PureSSE.Code
         {
 			Publish("updateStockPrice", stock.ToJson());
         }
-
-		//public IEnumerable<Stock> GetAllStocks(StreamWriter writer)
-		//{
-		//	return _stockTicker.GetAllStocks();
-		//}
-		
-		//public void SendGetMarketState(StreamWriter writer)
-		//{
-		//	writer.Write(eventPattern, "marketState", MarketState.ToString());
-		//	try
-		//	{
-		//		writer.Flush();
-		//	}
-		//	catch
-		//	{
-		//		//MvcApplication.Logger.Log(e.ToString(), "EXCEPTION");
-		//	}
-		//}
-
 
     }
 

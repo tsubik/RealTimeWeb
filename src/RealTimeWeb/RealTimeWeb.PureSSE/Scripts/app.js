@@ -122,13 +122,14 @@ $(function () {
 	};
 
 	if (!!window.EventSource) {
-		var source = new EventSource('http://localhost:51270/api/sse');
+		var source = new EventSource('/api/sse');
 
 		source.addEventListener('open', function (e) {
 			console.log('Connection was opened');
 		}, false);
 
 		source.addEventListener('error', function (e) {
+			console.log('error')
 			if (e.readyState == EventSource.CLOSED) {
 				console.log('Connection was closed');
 			}

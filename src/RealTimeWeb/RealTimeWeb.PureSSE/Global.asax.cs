@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RealTimeWeb.Core.Logging;
 
 namespace RealTimeWeb.PureSSE
 {
@@ -12,6 +13,8 @@ namespace RealTimeWeb.PureSSE
 	// visit http://go.microsoft.com/?LinkId=9394801
 	public class MvcApplication : System.Web.HttpApplication
 	{
+		public static ILogger Logger = new Logger();
+
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();

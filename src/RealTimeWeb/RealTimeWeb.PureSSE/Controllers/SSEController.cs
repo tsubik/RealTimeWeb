@@ -17,6 +17,7 @@ namespace RealTimeWeb.PureSSE.Controllers
 			StockTicker _ticker = StockTicker.Instance;
 			HttpResponseMessage response = request.CreateResponse();
 			response.Headers.Add("Cache-Control", "no-cache, must-revalidate");
+			response.Headers.Add("Connection", "keep-alive");
 			response.Content = new PushStreamContent(OnStreamAvailable, "text/event-stream");
 
 			return response;
