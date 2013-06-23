@@ -10,8 +10,8 @@ namespace RealTimeWeb.PureSSE.Code
 {
     public class StockTicker
     {
-		private static readonly ConcurrentBag<StreamWriter> _clients = new ConcurrentBag<StreamWriter>();
-		public ConcurrentBag<StreamWriter> Clients
+		private static readonly ConcurrentDictionary<StreamWriter, StreamWriter> _clients = new ConcurrentDictionary<StreamWriter, StreamWriter>();
+		public ConcurrentDictionary<StreamWriter, StreamWriter> Clients
 		{
 			get { return _clients; }
 		}
@@ -139,10 +139,10 @@ namespace RealTimeWeb.PureSSE.Code
             switch (marketState)
             {
                 case MarketState.Open:
-					Publish("marketOpened", "fdsafdsafdsfdfds");
+					Publish("marketOpened", string.Empty);
                     break;
                 case MarketState.Closed:
-					Publish("marketClosed", "fdsafdsafdsafds");
+					Publish("marketClosed", string.Empty);
                     break;
                 default:
                     break;
@@ -153,13 +153,15 @@ namespace RealTimeWeb.PureSSE.Code
 		{
 			foreach (var subscriber in _clients)
 			{
-				subscriber.Write(eventPattern, eventName, message);
+				subscriber.Value.Write(eventPattern, eventName, message);
 				try
 				{
-					subscriber.Flush();
+					subscriber.Value.Flush();
 				}
 				catch(Exception e)
 				{
+					StreamWriter w;
+					_clients.TryRemove(subscriber.Value, out w);
 					MvcApplication.Logger.Log(e.ToString(), "EXCEPTION");
 				}
 			}

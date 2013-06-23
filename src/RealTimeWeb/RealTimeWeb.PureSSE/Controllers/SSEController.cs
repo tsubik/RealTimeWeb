@@ -32,7 +32,7 @@ namespace RealTimeWeb.PureSSE.Controllers
 		private void OnStreamAvailable(Stream stream, HttpContent content, TransportContext context)
 		{
 			StreamWriter streamWriter = new StreamWriter(stream);
-			StockTicker.Instance.Clients.Add(streamWriter);
+			StockTicker.Instance.Clients.TryAdd(streamWriter, streamWriter);
 		}
     }
 }
